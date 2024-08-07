@@ -35,11 +35,11 @@ class BaseModel:
         returns a json serealizable dictionary representation
         of an instance
         """
-        new_dict = {}
+        d = {}
+        d['__class__'] = self.__class__.__name__ 
         for k,v in self.__dict__.items():
             if type(v) is datetime:
-                new_dict[k] = v.isoformat() 
+                d[k] = v.isoformat() 
             else:
-                new_dict[k] = v
-
-        return (new_dict)
+                d[k] = v
+        return (d)

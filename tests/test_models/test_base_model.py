@@ -4,7 +4,7 @@ from models.base_model import BaseModel
 import unittest
 
 
-class TestBaseModel(unittest.TestCase):
+class test_basemodel(unittest.TestCase):
     def setUp(self):
         """ makes a BaseModel instance before each test """
         self.test_model = BaseModel()

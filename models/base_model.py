@@ -16,6 +16,7 @@ class BaseModel:
         updated_at (datetime): The datetime of last update.
     """
     def __init__(self):
+        """ init the base model """
         self.id = str(uuid4())
         self.created_at = datetime.now()
         self.updated_at = self.created_at

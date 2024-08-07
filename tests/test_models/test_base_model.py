@@ -1,13 +1,16 @@
 #!/usr/bin/python3
-import unittest
+"""tests for base_model"""
 from models.base_model import BaseModel
+import unittest
 
 
 class TestBaseModel(unittest.TestCase):
     def setUp(self):
+        """ makes a BaseModel instance before each test """
         self.test_model = BaseModel()
 
     def tearDown(self):
+        """ destroys the BaseModel instance after each test """
         del self.test_model
 
     def test_str(self):

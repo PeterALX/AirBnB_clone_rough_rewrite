@@ -10,6 +10,7 @@ class test_basemodel(unittest.TestCase):
     def setUp(self):
         """ makes a BaseModel instance before each test """
         self.test_model = BaseModel()
+        # self.test_model.created_at = 'fake'
 
     def tearDown(self):
         """ destroys the BaseModel instance after each test """

@@ -15,8 +15,15 @@ class BaseModel:
         created_at (datetime): The datetime at creation.
         updated_at (datetime): The datetime of last update.
     """
-    def __init__(self):
+    def __init__(self, *args, **kw):
         """ init the base model """
+        if kw:
+            for k, v in kw.items():
+                if k in ('created_at','updated_at'):
+                    setattr(self, k, datetime.fromisoformat(v))
+                elif k != '__class__':
+                    setattr(self, k, v)
+            return
         self.id = str(uuid4())
         self.created_at = datetime.now()
         self.updated_at = self.created_at

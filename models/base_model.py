@@ -21,6 +21,16 @@ class BaseModel:
         self.created_at = datetime.now()
         self.updated_at = self.created_at
 
+    @property
+    def created_at(self):
+        return self._created_at
+    @created_at.setter
+    def created_at(self, val):
+        if not isinstance(val, datetime):
+            raise TypeError('the created_at property must be a datetime object')
+            return
+        self._created_at = val
+
     def __str__(self):
         """ Return a string representation of the BaseModel instance """
         return (f'[{self.__class__.__name__}] ({self.id}) {self.__dict__}')
@@ -46,3 +56,6 @@ class BaseModel:
             else:
                 d[k] = v
         return (d)
+
+b = BaseModel()
+print(b.created_at)

@@ -5,12 +5,10 @@ import unittest
 from datetime import datetime
 
 
-
 class test_basemodel(unittest.TestCase):
     def setUp(self):
         """ makes a BaseModel instance before each test """
         self.test_model = BaseModel()
-        # self.test_model.created_at = 'fake'
 
     def tearDown(self):
         """ destroys the BaseModel instance after each test """
@@ -28,7 +26,8 @@ class test_basemodel(unittest.TestCase):
         d = i.to_dict()
         self.assertEqual(d['__class__'], i.__class__.__name__)
         for k, v in i.__dict__.items():
-            message = f'property \'{k}\' missing from dictionary representation of BaseModel'
+            message = f'property \'{k}\' missing from \
+dictionary representation of BaseModel'
             self.assertIn(k, d, msg=message)
             if type(v) is datetime:
                 self.assertIsInstance(d[k], str)

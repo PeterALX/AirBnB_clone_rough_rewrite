@@ -2,6 +2,8 @@
 """tests for base_model"""
 from models.base_model import BaseModel
 import unittest
+from datetime import datetime
+
 
 
 class test_basemodel(unittest.TestCase):
@@ -22,3 +24,17 @@ class test_basemodel(unittest.TestCase):
     def test_to_dict(self):  # TODO!!!
         """ testing to_dict"""
         i = self.test_model
+        d = i.to_dict()
+        self.assertEqual(d['__class__'], i.__class__.__name__)
+        for k, v in i.__dict__.items():
+            message = f'property \'{k}\' missing from dictionary representation of BaseModel'
+            self.assertIn(k, d, msg=message)
+            if type(v) is datetime:
+                self.assertIsInstance(d[k], str)
+                self.assertIsInstance(datetime.fromisoformat(d[k]), datetime)
+
+    def test_save(self):
+        """ testing save """
+        i = self.test_model
+        i.save()
+        self.assertNotEqual(i.created_at, i.updated_at)

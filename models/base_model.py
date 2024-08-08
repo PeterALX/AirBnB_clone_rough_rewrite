@@ -2,7 +2,7 @@
 """
 The base class for all hbnb models is defined here
 """
-from datetime import datetime, timedelta
+from datetime import datetime
 from uuid import uuid4
 
 

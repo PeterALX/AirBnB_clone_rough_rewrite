@@ -3,6 +3,7 @@
 The base class for all hbnb models is defined here
 """
 from datetime import datetime
+from models import storage
 from uuid import uuid4
 
 
@@ -17,9 +18,9 @@ class BaseModel:
     """
     def __init__(self, *args, **kw):
         """ init the base model """
-        if kw:
+        if kw:  # reloading from dict which is from json file
             for k, v in kw.items():
-                if k in ('created_at','updated_at'):
+                if k in ('created_at', 'updated_at'):
                     setattr(self, k, datetime.fromisoformat(v))
                 elif k != '__class__':
                     setattr(self, k, v)
@@ -27,6 +28,7 @@ class BaseModel:
         self.id = str(uuid4())
         self.created_at = datetime.now()
         self.updated_at = self.created_at
+        storage.new(self)
 
     def __str__(self):
         """ Return a string representation of the BaseModel instance """
@@ -36,9 +38,9 @@ class BaseModel:
         """
         persists changes made to a BaseModel instance in future
         and reflects the time of update
-        -> persisting not implemented yet
         """
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """

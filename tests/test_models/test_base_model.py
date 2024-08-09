@@ -9,7 +9,7 @@ import os
 class TestBaseModel(unittest.TestCase):
     def setUp(self):
         """ set/reset test environment for each test """
-        storage._FileStorage__file_path = 'test_db.json'
+        # storage._FileStorage__file_path = 'test_db.json'
         storage._FileStorage__objects = {}
 
     def tearDown(self):

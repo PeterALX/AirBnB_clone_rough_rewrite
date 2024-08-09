@@ -20,14 +20,29 @@ class TestFileStorage(unittest.TestCase):
 
     def test_new(self):
         """ test new object addition on instantiation """
-        i = BaseModel()
-        self.assertIs(storage.all()[f'BaseModel.{i.id}'], i)
+        model = BaseModel()
+        self.assertIs(storage.all()[f'BaseModel.{model.id}'], model)
 
     def test_save(self):
         """ test that storage.save serializes models to json properly """
-        i = BaseModel()
-        d = i.to_dict()
+        model = BaseModel()
+        d = model.to_dict()
         storage.save()
         with open(storage._FileStorage__file_path, 'r') as f:
             json_dict = json.load(f)
-            self.assertEqual(json_dict[f'BaseModel.{i.id}'], d)
+            self.assertEqual(json_dict[f'BaseModel.{model.id}'], d)
+
+    def test_reload(self):
+        """ test that storage.save serializes models to json properly """
+        model = BaseModel()
+        d = model.to_dict()
+        storage.save()
+        len_before_reload = len(storage.all())
+        storage.reload()
+        len_after_reload = len(storage.all())
+
+        reloaded_model = storage.all()[f'BaseModel.{model.id}']
+        self.assertIsNot(reloaded_model, model)
+        self.assertEqual(reloaded_model.to_dict(), d)
+
+        self.assertEqual(len_before_reload, len_after_reload)

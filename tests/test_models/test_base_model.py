@@ -32,16 +32,16 @@ class TestBaseModel(unittest.TestCase):
 
     def test_str(self):
         """ testing __str__ """
-        i = BaseModel()
-        string_rep = f'[BaseModel] ({i.id}) {i.__dict__}'
-        self.assertEqual(str(i), string_rep)
+        model = BaseModel()
+        string_rep = f'[BaseModel] ({model.id}) {model.__dict__}'
+        self.assertEqual(str(model), string_rep)
 
     def test_to_dict(self):  # TODO!!!
         """ testing to_dict"""
-        i = BaseModel()
-        d = i.to_dict()
-        self.assertEqual(d['__class__'], i.__class__.__name__)
-        for k, v in i.__dict__.items():
+        model = BaseModel()
+        d = model.to_dict()
+        self.assertEqual(d['__class__'], model.__class__.__name__)
+        for k, v in model.__dict__.items():
             message = f'property \'{k}\' missing from \
 dictionary representation of BaseModel'
             self.assertIn(k, d, msg=message)
@@ -51,12 +51,12 @@ dictionary representation of BaseModel'
 
     def test_save(self):
         """ testing BaseModel's save """
-        i = BaseModel()
-        i.save()
-        self.assertNotEqual(i.created_at, i.updated_at)
+        model = BaseModel()
+        model.save()
+        self.assertNotEqual(model.created_at, model.updated_at)
 
         # test that model is saved to json properly
-        d = i.to_dict()
+        d = model.to_dict()
         with open(storage._FileStorage__file_path, 'r') as f:
             json_dict = json.load(f)
-            self.assertEqual(json_dict[f'BaseModel.{i.id}'], d)
+            self.assertEqual(json_dict[f'BaseModel.{model.id}'], d)

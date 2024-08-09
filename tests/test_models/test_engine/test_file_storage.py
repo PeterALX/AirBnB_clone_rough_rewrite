@@ -3,6 +3,7 @@
 from models import storage 
 from models.base_model import BaseModel
 import unittest
+import os
 
 print(storage.all().keys())
 
@@ -14,8 +15,17 @@ class test_filestorage(unittest.TestCase):
     def tearDown(self):
         """ destroys the BaseModel instance after each test """
         del self.test_model
+        # os.remove(storage._FileStorage__file_path)
 
     def test_new(self):
-        model = BaseModel()
+        """ test new object addition on instantiation """
+        i = self.test_model
+        self.assertIs(storage.all()[f'BaseModel.{i.id}'], i)
+
+    def test_save(self):
+        pass
+
+
+
 
 

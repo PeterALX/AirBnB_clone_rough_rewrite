@@ -46,3 +46,15 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(reloaded_model.to_dict(), d)
 
         self.assertEqual(len_before_reload, len_after_reload)
+
+    def test_filepath(self):
+        """
+        Test that storage engine's file path is present and a string
+        """
+        self.assertIsInstance(storage._FileStorage__file_path, str)
+
+    def test_objects(self):
+        """
+        Test that storage engine's __objects is present and a dict
+        """
+        self.assertIsInstance(storage._FileStorage__objects, dict)

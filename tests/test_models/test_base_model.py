@@ -14,8 +14,8 @@ class TestBaseModel(unittest.TestCase):
 
     def tearDown(self):
         """ clear test environment after every test """
-        if os.path.exists(storage._FileStorage__file_path):
-            os.remove(storage._FileStorage__file_path)
+        # if os.path.exists(storage._FileStorage__file_path):
+        #     os.remove(storage._FileStorage__file_path)
 
     def test_init(self):
         """ testing the model constructor"""

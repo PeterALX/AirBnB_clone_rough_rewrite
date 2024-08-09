@@ -5,8 +5,6 @@ from models.base_model import BaseModel
 import unittest
 import os
 
-print(storage.all().keys())
-
 class TestFileStorage(unittest.TestCase):
     def setUp(self):
         """ set/reset test environment for each test """

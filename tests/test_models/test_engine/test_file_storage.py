@@ -9,17 +9,18 @@ print(storage.all().keys())
 
 class test_filestorage(unittest.TestCase):
     def setUp(self):
-        """ makes a BaseModel instance before each test """
-        self.test_model = BaseModel()
+        """ set/reset test environment for each test """
+        storage._FileStorage__file_path = 'test_db.json'
+        storage._FileStorage__objects = {}
 
     def tearDown(self):
-        """ destroys the BaseModel instance after each test """
-        del self.test_model
-        # os.remove(storage._FileStorage__file_path)
+        """ clear test environment after every test """
+        if os.path.exists(storage._FileStorage__file_path):
+            os.remove(storage._FileStorage__file_path)
 
     def test_new(self):
         """ test new object addition on instantiation """
-        i = self.test_model
+        i = BaseModel()
         self.assertIs(storage.all()[f'BaseModel.{i.id}'], i)
 
     def test_save(self):

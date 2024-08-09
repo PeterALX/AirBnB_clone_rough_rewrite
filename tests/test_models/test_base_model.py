@@ -5,21 +5,23 @@ from models import storage
 import unittest
 from datetime import datetime
 import os
+import json
+
 
 class TestBaseModel(unittest.TestCase):
     def setUp(self):
         """ set/reset test environment for each test """
-        # storage._FileStorage__file_path = 'test_db.json'
+        storage._FileStorage__file_path = 'test_db.json'
         storage._FileStorage__objects = {}
 
     def tearDown(self):
         """ clear test environment after every test """
-        # if os.path.exists(storage._FileStorage__file_path):
-        #     os.remove(storage._FileStorage__file_path)
+        if os.path.exists(storage._FileStorage__file_path):
+            os.remove(storage._FileStorage__file_path)
 
     def test_init(self):
         """ testing the model constructor"""
-        original = BaseModel() 
+        original = BaseModel()
         original_dict = original.to_dict()
         copy = BaseModel(**original_dict)
         copy_dict = copy.to_dict()
@@ -30,7 +32,7 @@ class TestBaseModel(unittest.TestCase):
 
     def test_str(self):
         """ testing __str__ """
-        i = BaseModel() 
+        i = BaseModel()
         string_rep = f'[BaseModel] ({i.id}) {i.__dict__}'
         self.assertEqual(str(i), string_rep)
 
@@ -48,7 +50,13 @@ dictionary representation of BaseModel'
                 self.assertIsInstance(datetime.fromisoformat(d[k]), datetime)
 
     def test_save(self):
-        """ testing save """
+        """ testing BaseModel's save """
         i = BaseModel()
         i.save()
         self.assertNotEqual(i.created_at, i.updated_at)
+
+        # test that model is saved to json properly
+        d = i.to_dict()
+        with open(storage._FileStorage__file_path, 'r') as f:
+            json_dict = json.load(f)
+            self.assertEqual(json_dict[f'BaseModel.{i.id}'], d)

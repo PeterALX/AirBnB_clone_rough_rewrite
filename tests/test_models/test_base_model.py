@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 """tests for base_model"""
 from models.base_model import BaseModel
+from models import storage
 import unittest
 from datetime import datetime
 
-
+# print(storage._FileStorage__file_path)
+# print(storage._FileStorage__objects)
 class test_basemodel(unittest.TestCase):
     def setUp(self):
         """ makes a BaseModel instance before each test """
@@ -13,6 +15,14 @@ class test_basemodel(unittest.TestCase):
     def tearDown(self):
         """ destroys the BaseModel instance after each test """
         del self.test_model
+
+    def test_init(self):
+        """ testing the model constructor"""
+        original = self.test_model
+        original_dict = original.to_dict()
+        copy = BaseModel(**original_dict)
+        copy_dict = copy.to_dict()
+        self.assertEqual(original_dict, copy_dict)
 
     def test_str(self):
         """ testing __str__ """

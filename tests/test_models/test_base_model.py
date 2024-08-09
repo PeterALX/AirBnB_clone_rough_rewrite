@@ -6,7 +6,7 @@ import unittest
 from datetime import datetime
 import os
 
-class test_basemodel(unittest.TestCase):
+class TestBaseModel(unittest.TestCase):
     def setUp(self):
         """ set/reset test environment for each test """
         storage._FileStorage__file_path = 'test_db.json'

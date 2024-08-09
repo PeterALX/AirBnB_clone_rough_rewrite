@@ -7,7 +7,7 @@ import os
 
 print(storage.all().keys())
 
-class test_filestorage(unittest.TestCase):
+class TestFileStorage(unittest.TestCase):
     def setUp(self):
         """ set/reset test environment for each test """
         storage._FileStorage__file_path = 'test_db.json'

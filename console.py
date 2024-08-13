@@ -112,7 +112,8 @@ class HBNBCommand(cmd.Cmd):
         if f'{args[0]}.{args[1]}' not in models:
             print('** no instance found **')
         else:
-            print(models[f'{args[0]}.{args[1]}'])
+            del models[f'{args[0]}.{args[1]}']
+            storage.save()
 
     def do_all(self, arg):
         """
